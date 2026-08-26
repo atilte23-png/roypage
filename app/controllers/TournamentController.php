@@ -36,7 +36,7 @@ class TournamentController {
                 'min_elo' => $_POST['min_elo'] ?? 0,
                 'max_elo' => $_POST['max_elo'] ?? 3000,
                 'start_date' => $_POST['start_date'] ?? '',
-                'created_by' => 1 // TODO: Session du user connecté
+                'created_by' => null // Sans créateur (peut être NULL)
             ];
 
             if ($this->tournament->create($data)) {
