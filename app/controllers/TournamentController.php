@@ -4,15 +4,15 @@
  */
 
 require_once APP_PATH . '/models/Tournament.php';
-require_once APP_PATH . '/models/Match.php';
+require_once APP_PATH . '/models/GameMatch.php';
 
 class TournamentController {
     private $tournament;
-    private $match;
+    private $gameMatch;
 
     public function __construct() {
         $this->tournament = new Tournament();
-        $this->match = new Match();
+        $this->gameMatch = new GameMatch();
     }
 
     /**
@@ -63,7 +63,7 @@ class TournamentController {
             die('Tournoi non trouvé');
         }
 
-        $matches = $this->match->getByTournament($id);
+        $matches = $this->gameMatch->getByTournament($id);
         require_once APP_PATH . '/views/tournament/view.php';
     }
 
