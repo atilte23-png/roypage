@@ -3,16 +3,16 @@
  * ROYPAGE - Match Controller
  */
 
-require_once APP_PATH . '/models/Match.php';
+require_once APP_PATH . '/models/GameMatch.php';
 require_once APP_PATH . '/models/Player.php';
 require_once APP_PATH . '/models/ELOCalculator.php';
 
 class MatchController {
-    private $match;
+    private $gameMatch;
     private $player;
 
     public function __construct() {
-        $this->match = new Match();
+        $this->gameMatch = new GameMatch();
         $this->player = new Player();
     }
 
@@ -29,7 +29,7 @@ class MatchController {
                 'scheduled_at' => $_POST['scheduled_at'] ?? null
             ];
 
-            if ($this->match->create($data)) {
+            if ($this->gameMatch->create($data)) {
                 header('Location: ?page=match&action=list');
                 exit;
             }
@@ -42,7 +42,7 @@ class MatchController {
      * Lister tous les matchs
      */
     public function list() {
-        $matches = $this->match->getAll();
+        $matches = $this->gameMatch->getAll();
         require_once APP_PATH . '/views/match/list.php';
     }
 
@@ -55,7 +55,7 @@ class MatchController {
             die('ID du match manquant');
         }
 
-        $match = $this->match->getById($id);
+        $match = $this->gameMatch->getById($id);
         if (!$match) {
             die('Match non trouvé');
         }
@@ -89,7 +89,7 @@ class MatchController {
             $p2_change = $p2_new_elo - $player2['elo'];
 
             // Mettre à jour le match
-            $this->match->finish(
+            $this->gameMatch->finish(
                 $id,
                 $winner_id,
                 $player1_score,
@@ -119,7 +119,7 @@ class MatchController {
             exit;
         }
 
-        $match = $this->match->getById($id);
+        $match = $this->gameMatch->getById($id);
         if (!$match) {
             die('Match non trouvé');
         }
